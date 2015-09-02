@@ -1,6 +1,6 @@
 package com.suay.king.exception;
 
-public class SessionExpiredException extends BaseException {
+public class SessionExpiredException extends BusinessException {
 
 	/**
 	 * 

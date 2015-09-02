@@ -1,8 +1,9 @@
 package com.suay.king.model;
 
 import java.io.Serializable;
+import java.util.Comparator;
 
-public class UserScore implements Serializable {
+public class UserScore implements Comparator<UserScore>, Serializable {
 
 	/**
 	 * Serial for this class version
@@ -11,6 +12,77 @@ public class UserScore implements Serializable {
 
 	private Integer userId;
 
+	private Integer levelId;
+
 	private Integer score;
+
+	/**
+	 * @return the userId
+	 */
+	public Integer getUserId() {
+		return userId;
+	}
+
+	/**
+	 * @param userId
+	 *            the userId to set
+	 */
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+
+	/**
+	 * @return the score
+	 */
+	public Integer getScore() {
+		return score;
+	}
+
+	/**
+	 * @param score
+	 *            the score to set
+	 */
+	public void setScore(Integer score) {
+		this.score = score;
+	}
+
+	/**
+	 * @return the levelId
+	 */
+	public Integer getLevelId() {
+		return levelId;
+	}
+
+	/**
+	 * @param levelId
+	 *            the levelId to set
+	 */
+	public void setLevelId(Integer levelId) {
+		this.levelId = levelId;
+	}
+
+	public int compare(UserScore firstScore, UserScore secondScore) {
+		return Integer.compare(firstScore.score, secondScore.score);
+	}
+
+	/**
+	 * Since only one score of each user can be in each level,two UserScores are
+	 * equals when the userId and the level are equals
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if ((obj == null) || !(obj instanceof UserScore)) {
+			return false;
+		} else if (this == obj) {
+			return true;
+		} else {
+			UserScore userScore = (UserScore) obj;
+			if ((this.userId == userScore.userId) && (this.levelId == userScore.levelId)) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+	}
 
 }
