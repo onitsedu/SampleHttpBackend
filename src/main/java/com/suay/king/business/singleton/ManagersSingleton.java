@@ -1,6 +1,8 @@
 package com.suay.king.business.singleton;
 
+import com.suay.king.business.LevelManager;
 import com.suay.king.business.SessionManager;
+import com.suay.king.business.impl.LevelManagerImpl;
 import com.suay.king.business.impl.SessionManagerImpl;
 
 public enum ManagersSingleton {
@@ -9,8 +11,11 @@ public enum ManagersSingleton {
 
 	private SessionManager sessionManager;
 
+	private LevelManager levelManager;
+
 	private ManagersSingleton() {
 		this.sessionManager = new SessionManagerImpl();
+		this.levelManager = new LevelManagerImpl();
 	}
 
 	/**
@@ -18,6 +23,13 @@ public enum ManagersSingleton {
 	 */
 	public SessionManager getSessionManager() {
 		return sessionManager;
+	}
+
+	/**
+	 * @return the levelManager
+	 */
+	public LevelManager getLevelManager() {
+		return levelManager;
 	}
 
 }

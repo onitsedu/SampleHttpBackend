@@ -9,7 +9,12 @@ import com.suay.king.model.UserScore;
 
 public class LevelManagerImpl implements LevelManager {
 
-	public void addUserScore(UserScore score) {
+	public void addUserScore(String sessionKey, int levelId, int scoreValue) {
+
+		// TODO FIND USER ID IN
+
+		UserScore score = new UserScore(1, levelId, scoreValue);
+
 		GameLevel level = DataSingleton.INSTANCE.getGameLevels().putIfAbsent(score.getLevelId(),
 				new GameLevel(score.getLevelId()));
 		level.getHighScores().add(score);

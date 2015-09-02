@@ -12,17 +12,15 @@ public class BusinessException extends Exception {
 
 	public BusinessException() {
 		super();
-		this.code = BASE_ERROR_CODE;
 	}
 
 	public BusinessException(Integer code) {
 		super();
-		this.code = code;
+
 	}
 
 	public BusinessException(String message, Integer code) {
 		super(message);
-		this.code = code;
 	}
 
 }

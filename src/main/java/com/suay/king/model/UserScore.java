@@ -16,6 +16,16 @@ public class UserScore implements Comparator<UserScore>, Serializable {
 
 	private Integer score;
 
+	public UserScore() {
+
+	}
+
+	public UserScore(Integer userId, Integer levelId, Integer score) {
+		this.userId = userId;
+		this.levelId = levelId;
+		this.score = score;
+	}
+
 	/**
 	 * @return the userId
 	 */
