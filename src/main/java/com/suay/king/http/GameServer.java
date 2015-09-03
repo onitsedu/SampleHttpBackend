@@ -1,10 +1,3 @@
-/*
- *   BackEndServer.java
- * 
- * Copyright(c) 2014 Christian Delgado. All Rights Reserved.
- * This software is the proprietary information of Christian Delgado
- * 
- */
 package com.suay.king.http;
 
 import java.net.InetAddress;
@@ -16,24 +9,10 @@ import java.util.concurrent.Executors;
 import com.sun.net.httpserver.HttpContext;
 import com.sun.net.httpserver.HttpServer;
 
-/**
- * Main Class where the HttpServer for the BackEnd is deployed.
- *
- * @author Christian Delgado
- * @version 1.0
- * @date 12/28/14
- */
-public class BackEndServer {
+public class GameServer {
 
 	public static int PORT = 8081;
 
-	/**
-	 * Main Method where the HttpServer is deployed The HttpPort can be change,
-	 * running the app with the argument [-p portNumber]
-	 *
-	 * @param args
-	 * @throws Exception
-	 */
 	@SuppressWarnings("restriction")
 	public static void main(String[] args) throws Exception {
 		// validating the Java Arguments
@@ -67,7 +46,7 @@ public class BackEndServer {
 			ExecutorService executorService = Executors.newCachedThreadPool();
 			httpServer.setExecutor(executorService);
 			httpServer.start();
-			System.out.println("   HTTPServer started in http://" + hostName + ":" + PORT + "/");
+			System.out.println("   HTTPServer started at http://" + hostName + ":" + PORT + "/");
 			System.out.println("   Started HTTPServer Successfully!\n");
 		} catch (Exception e) {
 			System.err.println("Error with the HTTPServer.");

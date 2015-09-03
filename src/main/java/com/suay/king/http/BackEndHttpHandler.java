@@ -12,10 +12,14 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.util.Map;
 
+import com.suay.king.business.GameManager;
 import com.suay.king.business.LevelManager;
 import com.suay.king.business.SessionManager;
+import com.suay.king.business.impl.GameManagerImpl;
 import com.suay.king.business.singleton.ManagersSingleton;
 import com.suay.king.exception.BusinessException;
+import com.suay.king.exception.LevelNotFoundException;
+import com.suay.king.exception.SessionExpiredException;
 import com.suay.king.model.GameUser;
 import com.suay.king.model.UserScore;
 import com.suay.king.model.UserSession;
@@ -54,8 +58,7 @@ public class BackEndHttpHandler implements HttpHandler {
 	public static final String CONTENT_TYPE = "Content-Type";
 	public static final String CONTENT_TEXT = "text/plain";
 
-	private LevelManager lvlManager;
-	private SessionManager sessionManager;
+	private GameManager gameManager;
 
 	/**
 	 * Creates a new instance of BackEndHttpHandler
@@ -63,12 +66,12 @@ public class BackEndHttpHandler implements HttpHandler {
 	 * @param gameManager
 	 */
 	public BackEndHttpHandler() {
-		this.lvlManager = ManagersSingleton.INSTANCE.getLevelManager();
-		sessionManager = ManagersSingleton.INSTANCE.getSessionManager();
+		this.gameManager = GameManagerImpl.getInstance();
 	}
 
 	@Override
 	public void handle(HttpExchange httpExchange) throws IOException {
+		System.out.println("HANDLE");
 		String httpBody = "";
 		int httpCode = HttpURLConnection.HTTP_OK;
 		Map<String, String> parameters = (Map<String, String>) httpExchange.getAttribute(PARAMETER_ATTRIBUTE);
@@ -77,36 +80,38 @@ public class BackEndHttpHandler implements HttpHandler {
 			switch (request) {
 			case LOGIN_REQUEST:
 				final int userId = Integer.parseInt(parameters.get(USER_ID_PARAMETER));
-				GameUser user = new GameUser();
-				user.setUserId(userId);
-				UserSession session = sessionManager.addSession(user);
-				httpBody = session.getSessionId();
-
+				httpBody = gameManager.login(userId);
 				break;
 			case SCORE_REQUEST:
 				final String sessionKey = parameters.get(SESSION_KEY_PARAMETER);
 				final int score = Integer.parseInt(parameters.get(SCORE_PARAMETER));
 				final int levelId = Integer.parseInt(parameters.get(LEVEL_ID_PARAMETER));
-
-				lvlManager.addUserScore(sessionKey, levelId, score);
+				gameManager.addScore(sessionKey, levelId, score);
 				break;
 			case HIGH_SCORE_LIST_REQUEST:
 				final int levelId1 = Integer.parseInt(parameters.get(LEVEL_ID_PARAMETER));
-				lvlManager.getLevelRanking(levelId1);
+				httpBody = gameManager.listLevelRanking(levelId1).toString();
 				break;
 			default:
 			}
 		} catch (NumberFormatException ex) {
 			httpBody = "Invalid number format.";
 			httpCode = HttpURLConnection.HTTP_BAD_REQUEST;
-			httpExchange.getResponseHeaders().add(CONTENT_TYPE, CONTENT_TEXT);
-			httpExchange.sendResponseHeaders(httpCode, httpBody.length());
-			OutputStream os = httpExchange.getResponseBody();
-			os.write(httpBody.getBytes());
-			os.close();
-		} catch (BusinessException e) {
-			// TODO Auto-generated catch block
+		} catch (SessionExpiredException e) {
+			httpBody = "User unauthorized";
+			httpCode = HttpURLConnection.HTTP_UNAUTHORIZED;
+		} catch (LevelNotFoundException e) {
+			httpBody = "level not found";
+			httpCode = HttpURLConnection.HTTP_NOT_FOUND;
+		} catch (Exception e) {
 			e.printStackTrace();
+			httpBody = e.getMessage();
+			httpCode = HttpURLConnection.HTTP_INTERNAL_ERROR;
 		}
+		httpExchange.getResponseHeaders().add(CONTENT_TYPE, CONTENT_TEXT);
+		httpExchange.sendResponseHeaders(httpCode, httpBody.length());
+		OutputStream os = httpExchange.getResponseBody();
+		os.write(httpBody.getBytes());
+		os.close();
 	}
 }

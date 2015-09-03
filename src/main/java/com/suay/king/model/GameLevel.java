@@ -41,6 +41,18 @@ public class GameLevel implements Serializable {
 		return highScores;
 	}
 
+	/**
+	 * two levels are considered equal if their levelId are equal
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if ((obj instanceof GameLevel) && (((GameLevel) obj).getLevelId() == this.getLevelId())) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	@Override
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
@@ -51,6 +63,7 @@ public class GameLevel implements Serializable {
 				sb.append(" , ");
 			}
 		}
+		System.out.println(sb.toString());
 		return sb.toString();
 	}
 }

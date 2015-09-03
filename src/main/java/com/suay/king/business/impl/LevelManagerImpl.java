@@ -9,20 +9,23 @@ import com.suay.king.model.UserScore;
 
 public class LevelManagerImpl implements LevelManager {
 
-	public void addUserScore(String sessionKey, int levelId, int scoreValue) {
+	public void addUserScore(UserScore score) {
+		// GameLevel level =
+		// DataSingleton.INSTANCE.getGameLevels().putIfAbsent(score.getLevelId(),
+		// new GameLevel(score.getLevelId()));
+		GameLevel level = new GameLevel(score.getLevelId());
+		if (!DataSingleton.INSTANCE.getGameLevels().containsKey(score.getLevelId()))
+			level = DataSingleton.INSTANCE.getGameLevels().put(score.getLevelId(), level);
+		else
+			level = DataSingleton.INSTANCE.getGameLevels().get(score.getLevelId());
 
-		// TODO FIND USER ID IN
+		// why this not work equals than putIfAbsent
 
-		UserScore score = new UserScore(1, levelId, scoreValue);
-
-		GameLevel level = DataSingleton.INSTANCE.getGameLevels().putIfAbsent(score.getLevelId(),
-				new GameLevel(score.getLevelId()));
 		level.getHighScores().add(score);
 
-		// TODO limit 15
 	}
 
-	public GameLevel getLevelRanking(Integer levelId) throws BusinessException {
+	public GameLevel getLevelRanking(Integer levelId) throws LevelNotFoundException {
 		GameLevel level = DataSingleton.INSTANCE.getGameLevels().get(levelId);
 		if (level == null) {
 			throw new LevelNotFoundException();

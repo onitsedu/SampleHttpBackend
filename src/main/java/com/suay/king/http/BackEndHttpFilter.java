@@ -63,7 +63,9 @@ public class BackEndHttpFilter extends Filter {
 			httpExchange.setAttribute(BackEndHttpHandler.PARAMETER_ATTRIBUTE, parameters);
 			chain.doFilter(httpExchange);
 		} catch (Exception ex) {
+
 			exceptionHandledResponse(ex.getMessage(), httpExchange, HttpURLConnection.HTTP_BAD_REQUEST);
+			ex.printStackTrace();
 		}
 	}
 

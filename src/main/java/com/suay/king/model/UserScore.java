@@ -72,7 +72,7 @@ public class UserScore implements Comparator<UserScore>, Serializable {
 	}
 
 	public int compare(UserScore firstScore, UserScore secondScore) {
-		return Integer.compare(firstScore.score, secondScore.score);
+		return Integer.compare(secondScore.score, firstScore.score);
 	}
 
 	/**
@@ -93,6 +93,11 @@ public class UserScore implements Comparator<UserScore>, Serializable {
 				return false;
 			}
 		}
+	}
+
+	@Override
+	public String toString() {
+		return userId + "=" + score;
 	}
 
 }
