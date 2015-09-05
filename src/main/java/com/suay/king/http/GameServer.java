@@ -9,26 +9,19 @@ import java.util.concurrent.Executors;
 import com.sun.net.httpserver.HttpContext;
 import com.sun.net.httpserver.HttpServer;
 
+@SuppressWarnings("restriction")
 public class GameServer {
 
-	public static int PORT = 8081;
+	public static int PORT = 8080;
 
-	@SuppressWarnings("restriction")
 	public static void main(String[] args) throws Exception {
-		// validating the Java Arguments
 		if (args.length > 0) {
 			try {
-				if (args.length == 2) {
-					if (args[0].equals("-p")) {
-						PORT = Integer.parseInt(args[1]);
-					} else {
-					}
-				} else {
-				}
+				PORT = Integer.parseInt(args[1]);
 			} catch (Exception e) {
-				System.err.println("Error with the arguments.");
+				System.err.println("Error parsing arguments.");
 				System.err.println(e.getMessage());
-				System.err.println("java -jar KingGameServer.jar [-p portNumber]");
+				System.err.println("Usage--> java -jar KingMiniGameBackend.jar [portNumber](optional)");
 				return;
 			}
 		}
@@ -41,8 +34,8 @@ public class GameServer {
 				System.err.println("Unknown Host: " + ex);
 			}
 			HttpServer httpServer = HttpServer.create(new InetSocketAddress(PORT), 0);
-			HttpContext httpContext = httpServer.createContext("/", new BackEndHttpHandler());
-			httpContext.getFilters().add(new BackEndHttpFilter());
+			HttpContext httpContext = httpServer.createContext("/", new GameHttpHandler());
+			httpContext.getFilters().add(new HttpFilter());
 			ExecutorService executorService = Executors.newCachedThreadPool();
 			httpServer.setExecutor(executorService);
 			httpServer.start();
@@ -51,8 +44,7 @@ public class GameServer {
 		} catch (Exception e) {
 			System.err.println("Error with the HTTPServer.");
 			System.err.println(e.getMessage());
-			// e.printStackTrace();
-			// throw new BackEndException(e);
+			System.exit(0);
 		}
 	}
 }

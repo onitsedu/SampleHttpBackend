@@ -1,8 +1,6 @@
 package com.suay.king.model;
 
 import java.io.Serializable;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.UUID;
 
 public class UserSession implements Serializable {

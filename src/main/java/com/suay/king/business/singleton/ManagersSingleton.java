@@ -3,7 +3,6 @@ package com.suay.king.business.singleton;
 import com.suay.king.business.GameManager;
 import com.suay.king.business.LevelManager;
 import com.suay.king.business.SessionManager;
-import com.suay.king.business.impl.GameManagerImpl;
 import com.suay.king.business.impl.LevelManagerImpl;
 import com.suay.king.business.impl.SessionManagerImpl;
 

@@ -3,6 +3,9 @@ package com.suay.king.model;
 import java.io.Serializable;
 import java.util.Iterator;
 import java.util.concurrent.ConcurrentSkipListSet;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import com.suay.king.utils.Constants;
 
 public class GameLevel implements Serializable {
 
@@ -13,8 +16,10 @@ public class GameLevel implements Serializable {
 
 	private int levelId;
 	private ConcurrentSkipListSet<UserScore> highScores;
+	private final AtomicInteger size;
 
 	public GameLevel(Integer levelId) {
+		this.size = new AtomicInteger(0);
 		this.levelId = levelId;
 		this.highScores = new ConcurrentSkipListSet<UserScore>(new UserScore());
 	}
@@ -41,6 +46,39 @@ public class GameLevel implements Serializable {
 		return highScores;
 	}
 
+	public void addScore(UserScore score) {
+		if (size.get() >= Constants.LEVEL_MAX_SCORES) {
+			if (!(highScores.last().getScore() > score.getScore())) {
+				if (addOrReplace(score)) {
+					highScores.pollLast();
+				}
+			}
+		} else {
+			addOrReplace(score);
+			size.incrementAndGet();
+		}
+	}
+
+	/**
+	 * adds a score to the highScoresList, if the user is already in the table,
+	 * replaces his score, if not, add it.
+	 * 
+	 * @param score
+	 * @return true if score is replaced false otherwise
+	 */
+	private boolean addOrReplace(UserScore score) {
+		boolean ret = false;
+		for (UserScore userScore : highScores) {
+			if (userScore.equals(score)) {
+				ret = true;
+				highScores.remove(userScore);
+				break;
+			}
+		}
+		highScores.add(score);
+		return ret;
+	}
+
 	/**
 	 * two levels are considered equal if their levelId are equal
 	 */
@@ -60,10 +98,9 @@ public class GameLevel implements Serializable {
 			UserScore userScore = (UserScore) iterator.next();
 			sb.append(userScore.getUserId() + "=" + userScore.getScore());
 			if (iterator.hasNext()) {
-				sb.append(" , ");
+				sb.append(",");
 			}
 		}
-		System.out.println(sb.toString());
 		return sb.toString();
 	}
 }
