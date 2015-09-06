@@ -1,10 +1,3 @@
-/*
- *   GameHttpHandler.java
- * 
- * Copyright(c) 2014 Christian Delgado. All Rights Reserved.
- * This software is the proprietary information of Christian Delgado
- * 
- */
 package com.suay.king.http;
 
 import java.io.IOException;
@@ -23,50 +16,33 @@ import com.suay.king.utils.Constants;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
-/**
- * HttpHandler for to deploy the Http Rest Web Services, for the BackEnd
- * MiniGame Server.
- *
- * @author Christian Delgado
- * @version 1.0
- * @date 12/28/14
- */
 @SuppressWarnings("restriction")
 public class GameHttpHandler implements HttpHandler {
 
 	/*
 	 * Request for the different services
 	 */
-	public static final String LOGIN_REQUEST = "login";
-	public static final String SCORE_REQUEST = "score";
-	public static final String HIGH_SCORE_LIST_REQUEST = "highscorelist";
+	private static final String LOGIN_REQUEST = "login";
+	private static final String SCORE_REQUEST = "score";
+	private static final String HIGH_SCORE_LIST_REQUEST = "highscorelist";
 
 	private static final String LOGIN_PATTERN = "/(\\d*)/login";
 	private static final String SCORE_PATTERN = "/(\\d*)/score\\?sessionkey=(.*)";
 	private static final String HIGH_SCORE_PATTERN = "/(\\d*)/highscorelist";
-	/*
-	 * Http Content type constants
-	 */
 
 	private GameManager gameManager;
 
-	/**
-	 * Creates a new instance of GameHttpHandler
-	 *
-	 * @param gameManager
-	 */
 	public GameHttpHandler() {
 		this.gameManager = GameManagerImpl.getInstance();
 	}
 
 	@SuppressWarnings("unchecked")
-	@Override
 	public void handle(HttpExchange httpExchange) throws IOException {
 		String httpBody = "";
 		int httpCode = HttpURLConnection.HTTP_OK;
 		Map<String, String> parameters = (Map<String, String>) httpExchange.getAttribute(Constants.HTTP_ATT_PARAMS);
-
 		Map<Integer, String> pathParams = (Map<Integer, String>) httpExchange.getAttribute(Constants.HTTP_ATT_PATH);
+
 		try {
 			int id = Integer.parseInt(pathParams.get(1));
 			String request = matchPath(httpExchange);
@@ -97,30 +73,36 @@ public class GameHttpHandler implements HttpHandler {
 			httpBody = e.getHttpMessage();
 			httpCode = e.getHttpCode();
 		}
+		writeResponse(httpExchange, httpBody, httpCode);
+	}
+
+	private void writeResponse(HttpExchange httpExchange, String httpBody, Integer httpCode) throws IOException {
+
 		httpExchange.getResponseHeaders().add(Constants.CONTENT_TYPE, Constants.CONTENT_TEXT);
 		httpExchange.sendResponseHeaders(httpCode, httpBody.length());
 		OutputStream os = httpExchange.getResponseBody();
 		os.write(httpBody.getBytes());
 		os.close();
+
 	}
 
 	private String matchPath(HttpExchange httpExchange) throws HttpException {
 		String uri = httpExchange.getRequestURI().toString();
 		String method = httpExchange.getRequestMethod();
 		if (uri.matches(LOGIN_PATTERN)) {
-			if (method.equalsIgnoreCase(Constants.HTTP_GET)) {
+			if (Constants.HTTP_GET.equalsIgnoreCase(method)) {
 				return LOGIN_REQUEST;
 			} else {
 				throw new BadMethodException();
 			}
 		} else if (uri.matches(HIGH_SCORE_PATTERN)) {
-			if (method.equalsIgnoreCase(Constants.HTTP_GET)) {
+			if (Constants.HTTP_GET.equalsIgnoreCase(method)) {
 				return HIGH_SCORE_LIST_REQUEST;
 			} else {
 				throw new BadMethodException();
 			}
 		} else if (uri.matches(SCORE_PATTERN)) {
-			if (method.equalsIgnoreCase(Constants.HTTP_POST)) {
+			if (Constants.HTTP_POST.equalsIgnoreCase(method)) {
 				return SCORE_REQUEST;
 			} else {
 				throw new BadMethodException();

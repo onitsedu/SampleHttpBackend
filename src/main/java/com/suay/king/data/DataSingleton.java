@@ -15,7 +15,7 @@ public enum DataSingleton {
 
 	private ConcurrentMap<Integer, GameLevel> gameLevels;
 
-	private DataSingleton() {
+	DataSingleton() {
 		this.sessionActives = new ConcurrentHashMap<String, UserSession>();
 		this.gameLevels = new ConcurrentHashMap<Integer, GameLevel>(Constants.LEVEL_MAX_SCORES);
 	}

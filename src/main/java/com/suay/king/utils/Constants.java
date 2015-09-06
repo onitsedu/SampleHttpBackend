@@ -26,4 +26,7 @@ public final class Constants {
 	public static final String SCORE_PARAMETER = "score";
 	public static final String USER_ID_PARAMETER = "userid";
 
+	public static final Integer PORT = 8080;
+	public static final String LOCALHOST = "localhost";
+
 }

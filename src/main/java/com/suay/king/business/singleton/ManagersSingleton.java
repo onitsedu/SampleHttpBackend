@@ -16,7 +16,7 @@ public enum ManagersSingleton {
 
 	private GameManager gameManager;
 
-	private ManagersSingleton() {
+	ManagersSingleton() {
 		this.sessionManager = new SessionManagerImpl();
 		this.levelManager = new LevelManagerImpl();
 	}

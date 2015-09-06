@@ -6,8 +6,8 @@ import com.suay.king.model.UserScore;
 
 public interface LevelManager {
 
-	public void addUserScore(UserScore userScore);
+	void addUserScore(UserScore userScore);
 
-	public GameLevel getLevelRanking(Integer levelId) throws LevelNotFoundException;
+	GameLevel getLevelRanking(Integer levelId) throws LevelNotFoundException;
 
 }

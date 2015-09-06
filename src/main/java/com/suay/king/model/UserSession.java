@@ -5,9 +5,6 @@ import java.util.UUID;
 
 public class UserSession implements Serializable {
 
-	/**
-	 * Serial for this class version
-	 */
 	private static final long serialVersionUID = 1L;
 
 	private String sessionId;
@@ -16,11 +13,6 @@ public class UserSession implements Serializable {
 
 	private Long sessionTime;
 
-	/**
-	 * GameUser session constructor
-	 * 
-	 * @param userId
-	 */
 	public UserSession(Integer userId) {
 		this.userId = userId;
 		this.sessionTime = System.currentTimeMillis();

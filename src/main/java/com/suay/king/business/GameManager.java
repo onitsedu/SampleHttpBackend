@@ -6,9 +6,9 @@ import com.suay.king.model.GameLevel;
 
 public interface GameManager {
 
-	public String login(Integer userId);
+	String login(Integer userId);
 
-	public void addScore(String sessionKey, Integer levelId, Integer score) throws SessionExpiredException;
+	void addScore(String sessionKey, Integer levelId, Integer score) throws SessionExpiredException;
 
-	public GameLevel listLevelRanking(Integer levelId) throws LevelNotFoundException;
+	GameLevel listLevelRanking(Integer levelId) throws LevelNotFoundException;
 }

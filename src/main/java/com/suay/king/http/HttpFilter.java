@@ -56,20 +56,18 @@ public class HttpFilter extends Filter {
 	}
 
 	private Map<String, String> parseQueryString(HttpExchange httpExchange) throws BadRequestException {
-		String uri = httpExchange.getRequestURI().toString();
+		String query = httpExchange.getRequestURI().getQuery();
 		Map<String, String> params = new HashMap<String, String>();
-		try {
-			if (uri.contains(Constants.HTTP_QS_BEGIN)) {
-				String uriParams = uri.substring(uri.lastIndexOf(Constants.HTTP_QS_BEGIN)+1);
-				String[] paramsArray = uriParams.split(Constants.HTTP_QS_SEPARATOR);
-
+		if (query != null) {
+			try {
+				String[] paramsArray = query.split(Constants.HTTP_QS_SEPARATOR);
 				for (int i = 0; i < paramsArray.length; i++) {
 					String[] qs = paramsArray[i].split(Constants.HTTP_QS_PARAM_SEP);
 					params.put(qs[0], qs[1]);
 				}
+			} catch (Exception e) {
+				throw new BadRequestException();
 			}
-		} catch (Exception e) {
-			throw new BadRequestException();
 		}
 		return params;
 	}

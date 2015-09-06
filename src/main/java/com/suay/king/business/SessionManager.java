@@ -5,10 +5,10 @@ import com.suay.king.model.UserSession;
 
 public interface SessionManager {
 
-	public void addSession(UserSession session);
+	void addSession(UserSession session);
 
-	public UserSession getUserSession(String sessionId) throws SessionExpiredException;
+	UserSession getUserSession(String sessionId) throws SessionExpiredException;
 
-	public void cleanExpiredSessions();
+	void cleanExpiredSessions();
 
 }
