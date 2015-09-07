@@ -3,7 +3,7 @@ package com.suay.king.utils;
 public final class Constants {
 
 	public static final Long SESSION_EXPIRATION_TIME = 600000L;
-	public static final Integer LEVEL_MAX_SCORES = 3;
+	public static final Integer LEVEL_MAX_SCORES = 15;
 
 	/* HTTP constants */
 

@@ -26,7 +26,7 @@ public class SessionManagerTest {
 	}
 
 	@Test
-	public void SessionNotExpired() throws SessionExpiredException {
+	public void sessionNotExpired() throws SessionExpiredException {
 		UserSession session = new UserSession(2);
 		sessionManager.addSession(session);
 		UserSession requestedSession = sessionManager.getUserSession(session.getSessionId());
@@ -34,7 +34,7 @@ public class SessionManagerTest {
 	}
 
 	@Test
-	public void SessionExpired() throws InterruptedException {
+	public void sessionExpired() throws InterruptedException {
 		UserSession session = new UserSession(2);
 		sessionManager.addSession(session);
 		UserSession requestedSession = null;
@@ -50,7 +50,7 @@ public class SessionManagerTest {
 	}
 
 	@Test
-	public void SessionRemovedFromArray() throws InterruptedException {
+	public void sessionRemovedFromArray() throws InterruptedException {
 		UserSession session = new UserSession(2);
 		sessionManager.addSession(session);
 		Boolean expired = false;
@@ -63,5 +63,11 @@ public class SessionManagerTest {
 		Assert.assertNull(DataSingleton.INSTANCE.getSessionActives().get(session.getSessionId()));
 		Assert.assertTrue(expired);
 	}
+	
+	public void sessionCleaner(){
+		
+	}
+	
+	
 
 }

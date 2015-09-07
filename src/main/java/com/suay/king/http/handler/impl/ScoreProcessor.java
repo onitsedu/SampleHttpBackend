@@ -25,7 +25,7 @@ public class ScoreProcessor extends AbstractRequestProcessor {
 			gameManager.addScore(sessionKey, id, score);
 		} catch (NumberFormatException e) {
 			httpCode = HttpURLConnection.HTTP_BAD_REQUEST;
-			httpBody = e.getMessage();
+			httpBody = "Invalid number format";
 		} catch (SessionExpiredException e) {
 			httpCode = HttpURLConnection.HTTP_UNAUTHORIZED;
 			httpBody = e.getMessage();

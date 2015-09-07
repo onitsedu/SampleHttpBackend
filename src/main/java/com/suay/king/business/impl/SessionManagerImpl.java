@@ -6,7 +6,6 @@ import com.suay.king.business.SessionManager;
 import com.suay.king.data.DataSingleton;
 import com.suay.king.exception.business.SessionExpiredException;
 import com.suay.king.model.UserSession;
-import com.suay.king.utils.Constants;
 
 public class SessionManagerImpl implements SessionManager {
 

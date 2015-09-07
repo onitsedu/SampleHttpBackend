@@ -4,18 +4,11 @@ import java.io.Serializable;
 import java.util.Iterator;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-import com.suay.king.GameServer;
 import com.suay.king.utils.Constants;
 
 public class GameLevel implements Serializable {
-	private static final Logger LOGGER = Logger.getLogger(GameServer.class.getName());
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	private int levelId;
@@ -50,6 +43,7 @@ public class GameLevel implements Serializable {
 		return highScores;
 	}
 
+	// TODO review this method
 	public void addScore(UserScore score) {
 		if (size.get() >= Constants.LEVEL_MAX_SCORES) {
 			if (!(highScores.last().getScore() > score.getScore())) {
@@ -106,7 +100,6 @@ public class GameLevel implements Serializable {
 				sb.append(",");
 			}
 		}
-		LOGGER.info(sb.toString());
 		return sb.toString();
 	}
 }
