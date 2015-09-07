@@ -10,6 +10,12 @@ import com.suay.king.utils.Constants;
 
 public class SessionManagerImpl implements SessionManager {
 
+	private long sessionDuration;
+
+	public SessionManagerImpl(Long sessionDuration) {
+		this.sessionDuration = sessionDuration;
+	}
+
 	public void addSession(UserSession session) {
 		DataSingleton.INSTANCE.getSessionActives().putIfAbsent(session.getSessionId(), session);
 	}
@@ -19,7 +25,7 @@ public class SessionManagerImpl implements SessionManager {
 			throw new SessionExpiredException();
 		} else {
 			UserSession userSession = DataSingleton.INSTANCE.getSessionActives().get(session);
-			if (System.currentTimeMillis() - userSession.getSessionTime() >= Constants.SESSION_EXPIRATION_TIME) {
+			if (System.currentTimeMillis() - userSession.getSessionTime() >= sessionDuration) {
 				DataSingleton.INSTANCE.getSessionActives().remove(session);
 				throw new SessionExpiredException();
 			} else {
@@ -31,7 +37,7 @@ public class SessionManagerImpl implements SessionManager {
 	public synchronized void cleanExpiredSessions() {
 		long now = System.currentTimeMillis();
 		for (UserSession session : new ArrayList<UserSession>(DataSingleton.INSTANCE.getSessionActives().values())) {
-			if ((now - session.getSessionTime()) > Constants.SESSION_EXPIRATION_TIME) {
+			if ((now - session.getSessionTime()) > sessionDuration) {
 				DataSingleton.INSTANCE.getSessionActives().remove(session.getSessionId());
 			}
 		}

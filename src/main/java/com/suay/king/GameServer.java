@@ -19,21 +19,28 @@ public class GameServer {
 	private static final Logger LOGGER = Logger.getLogger(GameServer.class.getName());
 
 	public static void main(String[] args) throws Exception {
-		new GameServer().startServer(args);
+		new GameServer().startServer(GameServer.parseArgsPort(args));
 	}
 
-	public void startServer(String[] args) {
-		Integer port = parseArgsPort(args);
+	public void startServer(Integer port) {
 		String hostName = getHostName();
 		try {
 			LOGGER.info("Starting HTTPServer.");
-			initServer(hostName, port);
+			initServer(port);
 			LOGGER.info("HTTPServer started at http://" + hostName + ":" + port + "/");
 			LOGGER.info("Started HTTPServer Successfully!\n");
 		} catch (IOException e) {
 			LOGGER.warning("Error with the HTTPServer.");
 			LOGGER.warning(e.getMessage());
 		}
+	}
+
+	private void initServer(Integer port) throws IOException {
+		HttpServer httpServer = HttpServer.create(new InetSocketAddress(port), 0);
+		HttpContext httpContext = httpServer.createContext("/", new GameHttpHandler());
+		httpContext.getFilters().add(new HttpFilter());
+		httpServer.setExecutor(Executors.newCachedThreadPool());
+		httpServer.start();
 	}
 
 	private String getHostName() {
@@ -46,7 +53,7 @@ public class GameServer {
 		return hostName != null ? hostName : Constants.LOCALHOST;
 	}
 
-	private Integer parseArgsPort(String[] args) {
+	private static Integer parseArgsPort(String[] args) {
 		Integer argsport = null;
 		if (args.length > 0) {
 			try {
@@ -61,11 +68,4 @@ public class GameServer {
 		return argsport != null ? argsport : Constants.PORT;
 	}
 
-	private void initServer(String hostName, Integer port) throws IOException {
-		HttpServer httpServer = HttpServer.create(new InetSocketAddress(port), 0);
-		HttpContext httpContext = httpServer.createContext("/", new GameHttpHandler());
-		httpContext.getFilters().add(new HttpFilter());
-		httpServer.setExecutor(Executors.newCachedThreadPool());
-		httpServer.start();
-	}
 }

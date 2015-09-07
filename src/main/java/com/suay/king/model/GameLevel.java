@@ -4,10 +4,14 @@ import java.io.Serializable;
 import java.util.Iterator;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import com.suay.king.GameServer;
 import com.suay.king.utils.Constants;
 
 public class GameLevel implements Serializable {
+	private static final Logger LOGGER = Logger.getLogger(GameServer.class.getName());
 
 	/**
 	 * 
@@ -49,7 +53,7 @@ public class GameLevel implements Serializable {
 	public void addScore(UserScore score) {
 		if (size.get() >= Constants.LEVEL_MAX_SCORES) {
 			if (!(highScores.last().getScore() > score.getScore())) {
-				if (addOrReplace(score)) {
+				if (!addOrReplace(score)) {
 					highScores.pollLast();
 				}
 			}
@@ -61,22 +65,23 @@ public class GameLevel implements Serializable {
 
 	/**
 	 * adds a score to the highScoresList, if the user is already in the table,
-	 * replaces his score, if not, add it.
+	 * replaces his score, if not, add it .
 	 * 
 	 * @param score
-	 * @return true if score is replaced false otherwise
+	 * @return true if user is already in the list false otherwise
 	 */
 	private boolean addOrReplace(UserScore score) {
-		boolean ret = false;
 		for (UserScore userScore : highScores) {
 			if (userScore.equals(score)) {
-				ret = true;
-				highScores.remove(userScore);
-				break;
+				if (userScore.getScore() < score.getScore()) {
+					highScores.remove(userScore);
+					highScores.add(score);
+				}
+				return true;
 			}
 		}
 		highScores.add(score);
-		return ret;
+		return false;
 	}
 
 	/**
@@ -101,6 +106,7 @@ public class GameLevel implements Serializable {
 				sb.append(",");
 			}
 		}
+		LOGGER.info(sb.toString());
 		return sb.toString();
 	}
 }
