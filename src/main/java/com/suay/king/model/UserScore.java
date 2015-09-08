@@ -72,7 +72,13 @@ public class UserScore implements Comparator<UserScore>, Serializable {
 	}
 
 	public int compare(UserScore firstScore, UserScore secondScore) {
-		return Integer.compare(secondScore.score, firstScore.score);
+		if (secondScore.getScore().equals(firstScore.getScore())) {
+			return Integer.compare(firstScore.getUserId(),
+					secondScore.getUserId());
+		} else {
+			return Integer.compare(secondScore.getScore(),
+					firstScore.getScore());
+		}
 	}
 
 	/**
@@ -87,7 +93,8 @@ public class UserScore implements Comparator<UserScore>, Serializable {
 			return true;
 		} else {
 			UserScore userScore = (UserScore) obj;
-			if ((this.userId == userScore.userId) && (this.levelId == userScore.levelId)) {
+			if ((this.userId == userScore.userId)
+					&& (this.levelId == userScore.levelId)) {
 				return true;
 			} else {
 				return false;
