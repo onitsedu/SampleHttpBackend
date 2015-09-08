@@ -23,7 +23,6 @@ public class HighScoreProcessor extends AbstractRequestProcessor {
 			httpBody = gameManager.listLevelRanking(id).toString();
 		} catch (LevelNotFoundException e) {
 			httpCode = HttpURLConnection.HTTP_NOT_FOUND;
-
 			httpBody = e.getMessage();
 		} catch (NumberFormatException e) {
 			httpCode = HttpURLConnection.HTTP_BAD_REQUEST;

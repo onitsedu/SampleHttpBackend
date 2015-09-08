@@ -17,6 +17,8 @@ import com.sun.net.httpserver.HttpServer;
 public class GameServer {
 	private static final Logger LOGGER = Logger.getLogger(GameServer.class.getName());
 
+	private HttpServer httpServer;
+
 	public static void main(String[] args) throws Exception {
 		new GameServer().startServer(GameServer.parseArgsPort(args));
 	}
@@ -34,8 +36,13 @@ public class GameServer {
 		}
 	}
 
+	public void stopServer() {
+		
+		httpServer.stop(0);
+	}
+
 	private void initServer(Integer port) throws IOException {
-		HttpServer httpServer = HttpServer.create(new InetSocketAddress(port), 0);
+		httpServer = HttpServer.create(new InetSocketAddress(port), 0);
 		HttpContext httpContext = httpServer.createContext("/", new GameHttpHandler());
 		httpContext.getFilters().add(new HttpFilter());
 		httpServer.setExecutor(Executors.newCachedThreadPool());

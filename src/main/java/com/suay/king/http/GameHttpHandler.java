@@ -19,21 +19,13 @@ import com.sun.net.httpserver.HttpHandler;
 @SuppressWarnings("restriction")
 public class GameHttpHandler implements HttpHandler {
 
-	private static final String LOGIN_REQUEST = "login";
-	private static final String SCORE_REQUEST = "score";
-	private static final String HIGH_SCORE_LIST_REQUEST = "highscorelist";
-
-	private static final String LOGIN_PATTERN = "/(\\d*)/login";
-	private static final String SCORE_PATTERN = "/(\\d*)/score\\?sessionkey=(.*)";
-	private static final String HIGH_SCORE_PATTERN = "/(\\d*)/highscorelist";
-
 	Map<String, RequestProcessor> requestProcessors;
 
 	public GameHttpHandler() {
 		requestProcessors = new HashMap<>();
-		requestProcessors.put(LOGIN_REQUEST, new LoginProcessor());
-		requestProcessors.put(SCORE_REQUEST, new ScoreProcessor());
-		requestProcessors.put(HIGH_SCORE_LIST_REQUEST, new HighScoreProcessor());
+		requestProcessors.put(Constants.LOGIN_REQUEST, new LoginProcessor());
+		requestProcessors.put(Constants.SCORE_REQUEST, new ScoreProcessor());
+		requestProcessors.put(Constants.HIGH_SCORE_LIST_REQUEST, new HighScoreProcessor());
 	}
 
 	public void handle(HttpExchange httpExchange) throws IOException {
@@ -60,21 +52,21 @@ public class GameHttpHandler implements HttpHandler {
 	private String matchPath(HttpExchange httpExchange) throws HttpException {
 		String uri = httpExchange.getRequestURI().toString();
 		String method = httpExchange.getRequestMethod();
-		if (uri.matches(LOGIN_PATTERN)) {
+		if (uri.matches(Constants.LOGIN_PATTERN)) {
 			if (Constants.HTTP_GET.equalsIgnoreCase(method)) {
-				return LOGIN_REQUEST;
+				return Constants.LOGIN_REQUEST;
 			} else {
 				throw new BadMethodException();
 			}
-		} else if (uri.matches(HIGH_SCORE_PATTERN)) {
+		} else if (uri.matches(Constants.HIGH_SCORE_PATTERN)) {
 			if (Constants.HTTP_GET.equalsIgnoreCase(method)) {
-				return HIGH_SCORE_LIST_REQUEST;
+				return Constants.HIGH_SCORE_LIST_REQUEST;
 			} else {
 				throw new BadMethodException();
 			}
-		} else if (uri.matches(SCORE_PATTERN)) {
+		} else if (uri.matches(Constants.SCORE_PATTERN)) {
 			if (Constants.HTTP_POST.equalsIgnoreCase(method)) {
-				return SCORE_REQUEST;
+				return Constants.SCORE_REQUEST;
 			} else {
 				throw new BadMethodException();
 			}

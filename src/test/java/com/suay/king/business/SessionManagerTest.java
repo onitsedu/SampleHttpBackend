@@ -1,6 +1,6 @@
 package com.suay.king.business;
 
-import org.junit.Assert;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -22,7 +22,7 @@ public class SessionManagerTest {
 	public void addNewSession() {
 		UserSession session = new UserSession(1);
 		sessionManager.addSession(session);
-		Assert.assertNotNull(session.getSessionId());
+		assertNotNull(session.getSessionId());
 	}
 
 	@Test
@@ -30,7 +30,7 @@ public class SessionManagerTest {
 		UserSession session = new UserSession(2);
 		sessionManager.addSession(session);
 		UserSession requestedSession = sessionManager.getUserSession(session.getSessionId());
-		Assert.assertEquals(session, requestedSession);
+		assertEquals(session, requestedSession);
 	}
 
 	@Test
@@ -40,13 +40,13 @@ public class SessionManagerTest {
 		UserSession requestedSession = null;
 		Boolean expired = false;
 		try {
-			Thread.sleep(200L);
+			Thread.sleep(700L);
 			requestedSession = sessionManager.getUserSession(session.getSessionId());
 		} catch (SessionExpiredException e) {
 			expired = true;
 		}
-		Assert.assertNull(requestedSession);
-		Assert.assertTrue(expired);
+		assertNull(requestedSession);
+		assertTrue(expired);
 	}
 
 	@Test
@@ -55,19 +55,36 @@ public class SessionManagerTest {
 		sessionManager.addSession(session);
 		Boolean expired = false;
 		try {
-			Thread.sleep(200L);
+			Thread.sleep(700L);
 			sessionManager.getUserSession(session.getSessionId());
 		} catch (SessionExpiredException e) {
 			expired = true;
 		}
-		Assert.assertNull(DataSingleton.INSTANCE.getSessionActives().get(session.getSessionId()));
-		Assert.assertTrue(expired);
+		assertNull(DataSingleton.INSTANCE.getSessionActives().get(session.getSessionId()));
+		assertTrue(expired);
 	}
-	
-	public void sessionCleaner(){
-		
+
+	@Test
+	public void sessionCleaner() throws InterruptedException {
+		UserSession session = new UserSession(1);
+		sessionManager.addSession(session);
+
+		session = new UserSession(2);
+		sessionManager.addSession(session);
+
+		session = new UserSession(3);
+		sessionManager.addSession(session);
+
+		session = new UserSession(4);
+		sessionManager.addSession(session);
+
+		session = new UserSession(5);
+		sessionManager.addSession(session);
+
+		Thread.sleep(1000L);
+
+		sessionManager.cleanExpiredSessions();
+		assertTrue(DataSingleton.INSTANCE.getSessionActives().size() == 0);
 	}
-	
-	
 
 }

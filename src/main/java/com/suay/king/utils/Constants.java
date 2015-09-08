@@ -29,4 +29,12 @@ public final class Constants {
 	public static final Integer PORT = 8080;
 	public static final String LOCALHOST = "localhost";
 
+	public static final String LOGIN_REQUEST = "login";
+	public static final String SCORE_REQUEST = "score";
+	public static final String HIGH_SCORE_LIST_REQUEST = "highscorelist";
+
+	public static final String LOGIN_PATTERN = "/(\\d*)/login";
+	public static final String SCORE_PATTERN = "/(\\d*)/score.*";
+	public static final String HIGH_SCORE_PATTERN = "/(\\d*)/highscorelist";
+
 }
