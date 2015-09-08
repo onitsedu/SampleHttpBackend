@@ -43,10 +43,16 @@ public class GameLevel implements Serializable {
 		return highScores;
 	}
 
-	// TODO review this method
+	/**
+	 * Adds the user's score to the ranking if is one of the first 15 and
+	 * is the best score of the user 
+	 * 
+	 * @param score
+	 *            The User's score
+	 */
 	public void addScore(UserScore score) {
 		if (size.get() >= Constants.LEVEL_MAX_SCORES) {
-			if (!(highScores.last().getScore() > score.getScore())) {
+			if ((highScores.last().getScore() < score.getScore())) {
 				if (!addOrReplace(score)) {
 					highScores.pollLast();
 				}
@@ -74,6 +80,7 @@ public class GameLevel implements Serializable {
 				return true;
 			}
 		}
+		// why contains?
 		highScores.add(score);
 		return false;
 	}
@@ -83,7 +90,8 @@ public class GameLevel implements Serializable {
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		if ((obj instanceof GameLevel) && (((GameLevel) obj).getLevelId() == this.getLevelId())) {
+		if ((obj instanceof GameLevel)
+				&& (((GameLevel) obj).getLevelId() == this.getLevelId())) {
 			return true;
 		} else {
 			return false;
@@ -93,7 +101,8 @@ public class GameLevel implements Serializable {
 	@Override
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
-		for (Iterator<UserScore> iterator = highScores.iterator(); iterator.hasNext();) {
+		for (Iterator<UserScore> iterator = highScores.iterator(); iterator
+				.hasNext();) {
 			UserScore userScore = (UserScore) iterator.next();
 			sb.append(userScore.getUserId() + "=" + userScore.getScore());
 			if (iterator.hasNext()) {
