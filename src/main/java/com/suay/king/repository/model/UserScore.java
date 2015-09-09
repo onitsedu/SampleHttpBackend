@@ -8,7 +8,7 @@ public class UserScore implements Comparator<UserScore>, Serializable {
 	/**
 	 * Serial for this class version
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -4260993106609429311L;
 
 	private Integer userId;
 

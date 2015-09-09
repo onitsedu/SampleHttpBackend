@@ -1,7 +1,6 @@
 package com.suay.king.http.processor.impl;
 
 import java.io.IOException;
-import java.net.HttpURLConnection;
 import java.util.Map;
 import java.util.Optional;
 
