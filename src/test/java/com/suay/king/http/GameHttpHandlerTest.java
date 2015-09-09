@@ -70,20 +70,20 @@ public class GameHttpHandlerTest {
 		assertTrue("bad response code " + responsecode, responsecode == HttpURLConnection.HTTP_OK);
 		String sessionKey = getResponseBody(con.getInputStream());
 		con.disconnect();
-		con = createConnection(BASE_URL + "2/" + Constants.SCORE_REQUEST + Constants.HTTP_QS_BEGIN
+		con = createConnection(BASE_URL + "4/" + Constants.SCORE_REQUEST + Constants.HTTP_QS_BEGIN
 				+ Constants.SESSION_KEY_PARAMETER + "=" + sessionKey, Constants.HTTP_POST);
-		addBody(con, "1500");
+		addBody(con, "9000");
 		con.connect();
 		responsecode = con.getResponseCode();
 		assertTrue("bad response code " + responsecode, responsecode == HttpURLConnection.HTTP_OK);
 		con.disconnect();
 
-		con = createConnection(BASE_URL + "2/" + Constants.HIGH_SCORE_LIST_REQUEST, Constants.HTTP_GET);
+		con = createConnection(BASE_URL + "4/" + Constants.HIGH_SCORE_LIST_REQUEST, Constants.HTTP_GET);
 		con.connect();
 		responsecode = con.getResponseCode();
 		assertTrue("bad response code " + responsecode, responsecode == HttpURLConnection.HTTP_OK);
 		String body = getResponseBody(con.getInputStream());
-		assertTrue("unexpected response = " + body, body.contains("2=1500"));
+		assertTrue("unexpected response = " + body, body.contains("2=9000"));
 		con.disconnect();
 		con = createConnection(BASE_URL + "2/" + Constants.SCORE_REQUEST + Constants.HTTP_QS_BEGIN
 				+ Constants.SESSION_KEY_PARAMETER + "=" + sessionKey, Constants.HTTP_POST);

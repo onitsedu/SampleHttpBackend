@@ -62,6 +62,15 @@ public class LevelManagerTest {
 
 	}
 
+	public void testMaxSizeRanking() throws LevelNotFoundException {
+
+		for (int i = 0; i < 20; i++) {
+			addUserScore(i, 1, 1 * 100);
+		}
+		assertTrue(levelManager.getLevelRanking(1).getSize().get() == 15);
+
+	}
+
 	private void addUserScore(Integer userId, Integer levelId, Integer score) {
 		UserScore userScore = new UserScore(userId, levelId, score);
 		levelManager.addUserScore(userScore);
