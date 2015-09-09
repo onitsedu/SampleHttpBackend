@@ -1,10 +1,10 @@
-package com.suay.king.data;
+package com.suay.king.repository.datasource;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-import com.suay.king.model.GameLevel;
-import com.suay.king.model.UserSession;
+import com.suay.king.repository.model.GameLevel;
+import com.suay.king.repository.model.UserSession;
 import com.suay.king.utils.Constants;
 
 public enum DataSingleton {

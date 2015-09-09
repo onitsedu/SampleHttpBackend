@@ -1,4 +1,4 @@
-package com.suay.king.http;
+package com.suay.king.http.handler;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -8,10 +8,10 @@ import java.util.Map;
 import com.suay.king.exception.http.BadMethodException;
 import com.suay.king.exception.http.HttpException;
 import com.suay.king.exception.http.PageNotFoundException;
-import com.suay.king.http.handler.RequestProcessor;
-import com.suay.king.http.handler.impl.HighScoreProcessor;
-import com.suay.king.http.handler.impl.LoginProcessor;
-import com.suay.king.http.handler.impl.ScoreProcessor;
+import com.suay.king.http.processor.RequestProcessor;
+import com.suay.king.http.processor.impl.HighScoreProcessor;
+import com.suay.king.http.processor.impl.LoginProcessor;
+import com.suay.king.http.processor.impl.ScoreProcessor;
 import com.suay.king.utils.Constants;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -22,10 +22,11 @@ public class GameHttpHandler implements HttpHandler {
 	Map<String, RequestProcessor> requestProcessors;
 
 	public GameHttpHandler() {
-		requestProcessors = new HashMap<>();
+		requestProcessors = new HashMap<String, RequestProcessor>();
 		requestProcessors.put(Constants.LOGIN_REQUEST, new LoginProcessor());
 		requestProcessors.put(Constants.SCORE_REQUEST, new ScoreProcessor());
-		requestProcessors.put(Constants.HIGH_SCORE_LIST_REQUEST, new HighScoreProcessor());
+		requestProcessors.put(Constants.HIGH_SCORE_LIST_REQUEST,
+				new HighScoreProcessor());
 	}
 
 	public void handle(HttpExchange httpExchange) throws IOException {
@@ -41,9 +42,12 @@ public class GameHttpHandler implements HttpHandler {
 
 	}
 
-	protected void writeErrorResponse(HttpExchange httpExchange, HttpException e) throws IOException {
-		httpExchange.getResponseHeaders().add(Constants.CONTENT_TYPE, Constants.CONTENT_TEXT);
-		httpExchange.sendResponseHeaders(e.getHttpCode(), e.getHttpMessage().length());
+	protected void writeErrorResponse(HttpExchange httpExchange, HttpException e)
+			throws IOException {
+		httpExchange.getResponseHeaders().add(Constants.CONTENT_TYPE,
+				Constants.CONTENT_TEXT);
+		httpExchange.sendResponseHeaders(e.getHttpCode(), e.getHttpMessage()
+				.length());
 		OutputStream os = httpExchange.getResponseBody();
 		os.write(e.getHttpMessage().getBytes());
 		os.close();

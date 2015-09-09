@@ -3,9 +3,9 @@ package com.suay.king.business.impl;
 import java.util.ArrayList;
 
 import com.suay.king.business.SessionManager;
-import com.suay.king.data.DataSingleton;
 import com.suay.king.exception.business.SessionExpiredException;
-import com.suay.king.model.UserSession;
+import com.suay.king.repository.datasource.DataSingleton;
+import com.suay.king.repository.model.UserSession;
 
 public class SessionManagerImpl implements SessionManager {
 
@@ -15,15 +15,18 @@ public class SessionManagerImpl implements SessionManager {
 		this.sessionDuration = sessionDuration;
 	}
 
-	public void addSession(UserSession session) {
-		DataSingleton.INSTANCE.getSessionActives().putIfAbsent(session.getSessionId(), session);
+	public synchronized void addSession(UserSession session) {
+		DataSingleton.INSTANCE.getSessionActives().putIfAbsent(
+				session.getSessionId(), session);
 	}
 
-	public UserSession getUserSession(String session) throws SessionExpiredException {
+	public UserSession getUserSession(String session)
+			throws SessionExpiredException {
 		if (!DataSingleton.INSTANCE.getSessionActives().containsKey(session)) {
 			throw new SessionExpiredException();
 		} else {
-			UserSession userSession = DataSingleton.INSTANCE.getSessionActives().get(session);
+			UserSession userSession = DataSingleton.INSTANCE
+					.getSessionActives().get(session);
 			if (System.currentTimeMillis() - userSession.getSessionTime() >= sessionDuration) {
 				DataSingleton.INSTANCE.getSessionActives().remove(session);
 				throw new SessionExpiredException();
@@ -35,9 +38,11 @@ public class SessionManagerImpl implements SessionManager {
 
 	public synchronized void cleanExpiredSessions() {
 		long now = System.currentTimeMillis();
-		for (UserSession session : new ArrayList<UserSession>(DataSingleton.INSTANCE.getSessionActives().values())) {
+		for (UserSession session : new ArrayList<UserSession>(
+				DataSingleton.INSTANCE.getSessionActives().values())) {
 			if ((now - session.getSessionTime()) > sessionDuration) {
-				DataSingleton.INSTANCE.getSessionActives().remove(session.getSessionId());
+				DataSingleton.INSTANCE.getSessionActives().remove(
+						session.getSessionId());
 			}
 		}
 	}

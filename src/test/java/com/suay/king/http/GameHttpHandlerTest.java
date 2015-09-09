@@ -14,24 +14,24 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.suay.king.GameServer;
+import com.suay.king.server.impl.GameServerImpl;
 import com.suay.king.utils.Constants;
 
 public class GameHttpHandlerTest {
 	private static final Logger LOGGER = Logger.getLogger(GameHttpHandlerTest.class.getName());
 
-	private static GameServer server;
+	private static GameServerImpl server;
 
 	private static final String BASE_URL = "http://localhost:8080/";
 
 	@AfterClass
 	public static void before() {
-		server.stopServer();
+		server.doStop();
 	}
 
 	@BeforeClass
 	public static void after() {
-		server = new GameServer();
+		server = new GameServerImpl();
 		server.startServer(8080);
 	}
 

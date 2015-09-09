@@ -1,4 +1,4 @@
-package com.suay.king.model;
+package com.suay.king.repository.model;
 
 import java.io.Serializable;
 import java.util.UUID;

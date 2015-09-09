@@ -1,13 +1,14 @@
 package com.suay.king.business;
 
 import static org.junit.Assert.*;
+
 import org.junit.Before;
 import org.junit.Test;
 
 import com.suay.king.business.impl.SessionManagerImpl;
-import com.suay.king.data.DataSingleton;
 import com.suay.king.exception.business.SessionExpiredException;
-import com.suay.king.model.UserSession;
+import com.suay.king.repository.datasource.DataSingleton;
+import com.suay.king.repository.model.UserSession;
 
 public class SessionManagerTest {
 

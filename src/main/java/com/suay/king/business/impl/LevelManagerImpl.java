@@ -1,10 +1,10 @@
 package com.suay.king.business.impl;
 
 import com.suay.king.business.LevelManager;
-import com.suay.king.data.DataSingleton;
 import com.suay.king.exception.business.LevelNotFoundException;
-import com.suay.king.model.GameLevel;
-import com.suay.king.model.UserScore;
+import com.suay.king.repository.datasource.DataSingleton;
+import com.suay.king.repository.model.GameLevel;
+import com.suay.king.repository.model.UserScore;
 
 public class LevelManagerImpl implements LevelManager {
 

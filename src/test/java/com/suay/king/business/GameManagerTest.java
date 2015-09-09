@@ -1,14 +1,15 @@
 package com.suay.king.business;
 
 import static org.junit.Assert.*;
+
 import org.junit.Before;
 import org.junit.Test;
 
 import com.suay.king.business.impl.GameManagerImpl;
 import com.suay.king.exception.business.LevelNotFoundException;
 import com.suay.king.exception.business.SessionExpiredException;
-import com.suay.king.model.GameLevel;
-import com.suay.king.model.UserScore;
+import com.suay.king.repository.model.GameLevel;
+import com.suay.king.repository.model.UserScore;
 
 public class GameManagerTest {
 

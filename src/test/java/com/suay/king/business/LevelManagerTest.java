@@ -1,12 +1,13 @@
 package com.suay.king.business;
 
 import static org.junit.Assert.*;
+
 import org.junit.Before;
 import org.junit.Test;
 
 import com.suay.king.business.impl.LevelManagerImpl;
 import com.suay.king.exception.business.LevelNotFoundException;
-import com.suay.king.model.UserScore;
+import com.suay.king.repository.model.UserScore;
 
 public class LevelManagerTest {
 
