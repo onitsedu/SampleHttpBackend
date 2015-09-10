@@ -2,7 +2,11 @@ package com.suay.king.repository.model;
 
 import java.io.Serializable;
 import java.util.Comparator;
-
+/**
+ * 
+ * @author csuay
+ *
+ */
 public class UserScore implements Comparator<UserScore>, Serializable {
 
 	/**

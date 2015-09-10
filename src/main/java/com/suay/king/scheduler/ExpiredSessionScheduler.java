@@ -6,7 +6,11 @@ import java.util.concurrent.TimeUnit;
 
 import com.suay.king.business.singleton.ManagersSingleton;
 import com.suay.king.utils.Constants;
-
+/**
+ * 
+ * @author csuay
+ *
+ */
 public class ExpiredSessionScheduler implements Runnable {
 
 	public void startService() {

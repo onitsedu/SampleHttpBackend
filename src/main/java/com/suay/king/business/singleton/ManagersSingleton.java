@@ -7,6 +7,11 @@ import com.suay.king.business.impl.LevelManagerImpl;
 import com.suay.king.business.impl.SessionManagerImpl;
 import com.suay.king.utils.Constants;
 
+/**
+ * 
+ * @author csuay
+ *
+ */
 public enum ManagersSingleton {
 
 	INSTANCE;
@@ -18,7 +23,8 @@ public enum ManagersSingleton {
 	private GameManager gameManager;
 
 	ManagersSingleton() {
-		this.sessionManager = new SessionManagerImpl(Constants.SESSION_EXPIRATION_TIME);
+		this.sessionManager = new SessionManagerImpl(
+				Constants.SESSION_EXPIRATION_TIME);
 		this.levelManager = new LevelManagerImpl();
 	}
 

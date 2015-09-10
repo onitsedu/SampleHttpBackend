@@ -2,7 +2,11 @@ package com.suay.king.repository.model;
 
 import java.io.Serializable;
 import java.util.UUID;
-
+/**
+ * 
+ * @author csuay
+ *
+ */
 public class UserSession implements Serializable {
 
 	private static final long serialVersionUID = 1L;

@@ -16,6 +16,11 @@ import com.suay.king.utils.Constants;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
+/**
+ * 
+ * @author csuay
+ *
+ */
 @SuppressWarnings("restriction")
 public class GameHttpHandler implements HttpHandler {
 

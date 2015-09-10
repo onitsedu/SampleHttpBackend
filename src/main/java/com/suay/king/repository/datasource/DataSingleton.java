@@ -7,6 +7,11 @@ import com.suay.king.repository.model.GameLevel;
 import com.suay.king.repository.model.UserSession;
 import com.suay.king.utils.Constants;
 
+/**
+ * 
+ * @author csuay
+ *
+ */
 public enum DataSingleton {
 
 	INSTANCE;
@@ -17,7 +22,8 @@ public enum DataSingleton {
 
 	DataSingleton() {
 		this.sessionActives = new ConcurrentHashMap<String, UserSession>();
-		this.gameLevels = new ConcurrentHashMap<Integer, GameLevel>(Constants.LEVEL_MAX_SCORES);
+		this.gameLevels = new ConcurrentHashMap<Integer, GameLevel>(
+				Constants.LEVEL_MAX_SCORES);
 	}
 
 	/**

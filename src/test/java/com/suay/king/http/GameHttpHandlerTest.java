@@ -26,7 +26,7 @@ public class GameHttpHandlerTest {
 
 	@AfterClass
 	public static void before() {
-		server.doStop();
+		server.stopServer();
 	}
 
 	@BeforeClass

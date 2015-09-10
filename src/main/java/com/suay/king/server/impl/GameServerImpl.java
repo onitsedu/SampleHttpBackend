@@ -35,7 +35,7 @@ public class GameServerImpl implements GameServer {
 		}
 	}
 
-	public void doStop() {
+	public void stopServer() {
 
 		httpServer.stop(0);
 	}

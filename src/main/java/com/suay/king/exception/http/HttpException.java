@@ -3,9 +3,9 @@ package com.suay.king.exception.http;
 public class HttpException extends Exception {
 
 	/**
-	 * 
+	 * Serial for this class version
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -2408869074768230346L;
 
 	private int httpCode;
 	private String httpMessage;

@@ -1,7 +1,11 @@
 package com.suay.king.exception;
 
 public class BaseException extends Exception {
-	private static final long serialVersionUID = 1L;
+
+	/**
+	 * Serial for this class version
+	 */
+	private static final long serialVersionUID = 8585036119563629836L;
 
 	public BaseException() {
 		super();

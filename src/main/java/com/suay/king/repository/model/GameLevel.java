@@ -4,7 +4,11 @@ import java.io.Serializable;
 import java.util.Iterator;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.atomic.AtomicInteger;
-
+/**
+ * 
+ * @author csuay
+ *
+ */
 public class GameLevel implements Serializable {
 
 	/**

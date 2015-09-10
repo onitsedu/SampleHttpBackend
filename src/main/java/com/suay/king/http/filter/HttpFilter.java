@@ -13,6 +13,11 @@ import com.suay.king.utils.Constants;
 import com.sun.net.httpserver.Filter;
 import com.sun.net.httpserver.HttpExchange;
 
+/**
+ * 
+ * @author csuay
+ *
+ */
 @SuppressWarnings("restriction")
 public class HttpFilter extends Filter {
 
@@ -22,15 +27,20 @@ public class HttpFilter extends Filter {
 	}
 
 	@Override
-	public void doFilter(HttpExchange httpExchange, Chain chain) throws IOException {
+	public void doFilter(HttpExchange httpExchange, Chain chain)
+			throws IOException {
 		try {
-			httpExchange.setAttribute(Constants.HTTP_ATT_BODY, getBody(httpExchange));
-			httpExchange.setAttribute(Constants.HTTP_ATT_PARAMS, parseQueryString(httpExchange));
-			httpExchange.setAttribute(Constants.HTTP_ATT_PATH, getPathParams(httpExchange));
+			httpExchange.setAttribute(Constants.HTTP_ATT_BODY,
+					getBody(httpExchange));
+			httpExchange.setAttribute(Constants.HTTP_ATT_PARAMS,
+					parseQueryString(httpExchange));
+			httpExchange.setAttribute(Constants.HTTP_ATT_PATH,
+					getPathParams(httpExchange));
 			chain.doFilter(httpExchange);
 		} catch (HttpException e) {
 			e.printStackTrace();
-			httpExchange.sendResponseHeaders(e.getHttpCode(), e.getHttpMessage().length());
+			httpExchange.sendResponseHeaders(e.getHttpCode(), e
+					.getHttpMessage().length());
 			OutputStream os = httpExchange.getResponseBody();
 			os.write(e.getHttpMessage().getBytes());
 			os.close();
@@ -39,7 +49,8 @@ public class HttpFilter extends Filter {
 
 	private String getBody(HttpExchange httpExchange) throws IOException {
 		String line;
-		InputStreamReader inputStreamReader = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
+		InputStreamReader inputStreamReader = new InputStreamReader(
+				httpExchange.getRequestBody(), "utf-8");
 		BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
 		StringBuffer sb = new StringBuffer();
 		line = bufferedReader.readLine();
@@ -55,14 +66,16 @@ public class HttpFilter extends Filter {
 		return sb.toString();
 	}
 
-	private Map<String, String> parseQueryString(HttpExchange httpExchange) throws BadRequestException {
+	private Map<String, String> parseQueryString(HttpExchange httpExchange)
+			throws BadRequestException {
 		String query = httpExchange.getRequestURI().getQuery();
 		Map<String, String> params = new HashMap<String, String>();
 		if (query != null) {
 			try {
 				String[] paramsArray = query.split(Constants.HTTP_QS_SEPARATOR);
 				for (int i = 0; i < paramsArray.length; i++) {
-					String[] qs = paramsArray[i].split(Constants.HTTP_QS_PARAM_SEP);
+					String[] qs = paramsArray[i]
+							.split(Constants.HTTP_QS_PARAM_SEP);
 					params.put(qs[0], qs[1]);
 				}
 			} catch (Exception e) {
@@ -72,7 +85,8 @@ public class HttpFilter extends Filter {
 		return params;
 	}
 
-	private Map<Integer, String> getPathParams(HttpExchange httpExchange) throws BadRequestException {
+	private Map<Integer, String> getPathParams(HttpExchange httpExchange)
+			throws BadRequestException {
 		Map<Integer, String> pathParams = new HashMap<Integer, String>();
 		String uri = httpExchange.getRequestURI().toString();
 		try {

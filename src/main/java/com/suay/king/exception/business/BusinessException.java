@@ -3,11 +3,17 @@ package com.suay.king.exception.business;
 import com.suay.king.exception.BaseException;
 
 /**
- * Checked exception to throw from the business layer
+ * 
+ * @author csuay
+ *
  */
 public class BusinessException extends BaseException {
 
-	private static final long serialVersionUID = 1L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1999459648129105506L;
+
 	private static final Integer BASE_ERROR_CODE = -1;
 
 	private Integer code;
