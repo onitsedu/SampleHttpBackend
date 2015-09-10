@@ -14,30 +14,29 @@ import com.suay.king.utils.Constants;
  */
 public enum DataSingleton {
 
-	INSTANCE;
+    INSTANCE;
 
-	private ConcurrentMap<String, UserSession> sessionActives;
+    private ConcurrentMap<String, UserSession> sessionActives;
 
-	private ConcurrentMap<Integer, GameLevel> gameLevels;
+    private ConcurrentMap<Integer, GameLevel> gameLevels;
 
-	DataSingleton() {
-		this.sessionActives = new ConcurrentHashMap<String, UserSession>();
-		this.gameLevels = new ConcurrentHashMap<Integer, GameLevel>(
-				Constants.LEVEL_MAX_SCORES);
-	}
+    DataSingleton() {
+	this.sessionActives = new ConcurrentHashMap<String, UserSession>();
+	this.gameLevels = new ConcurrentHashMap<Integer, GameLevel>(Constants.LEVEL_MAX_SCORES);
+    }
 
-	/**
-	 * @return the sessionActives
-	 */
-	public ConcurrentMap<String, UserSession> getSessionActives() {
-		return sessionActives;
-	}
+    /**
+     * @return the sessionActives
+     */
+    public ConcurrentMap<String, UserSession> getSessionActives() {
+	return sessionActives;
+    }
 
-	/**
-	 * @return the gameLevels
-	 */
-	public ConcurrentMap<Integer, GameLevel> getGameLevels() {
-		return gameLevels;
-	}
+    /**
+     * @return the gameLevels
+     */
+    public ConcurrentMap<Integer, GameLevel> getGameLevels() {
+	return gameLevels;
+    }
 
 }

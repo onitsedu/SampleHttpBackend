@@ -6,6 +6,7 @@ import java.util.concurrent.TimeUnit;
 
 import com.suay.king.business.singleton.ManagersSingleton;
 import com.suay.king.utils.Constants;
+
 /**
  * 
  * @author csuay
@@ -13,13 +14,13 @@ import com.suay.king.utils.Constants;
  */
 public class ExpiredSessionScheduler implements Runnable {
 
-	public void startService() {
-		ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
-		service.scheduleAtFixedRate(this, Constants.SESSION_EXPIRATION_TIME, Constants.SESSION_EXPIRATION_TIME,
-				TimeUnit.MILLISECONDS);
-	}
+    public void startService() {
+	ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
+	service.scheduleAtFixedRate(this, Constants.SESSION_EXPIRATION_TIME, Constants.SESSION_EXPIRATION_TIME,
+		TimeUnit.MILLISECONDS);
+    }
 
-	public void run() {
-		ManagersSingleton.INSTANCE.getSessionManager().cleanExpiredSessions();
-	}
+    public void run() {
+	ManagersSingleton.INSTANCE.getSessionManager().cleanExpiredSessions();
+    }
 }

@@ -11,47 +11,52 @@ import com.suay.king.repository.model.UserScore;
 import com.suay.king.repository.model.UserSession;
 import com.suay.king.scheduler.ExpiredSessionScheduler;
 
+/**
+ * 
+ * @author csuay
+ *
+ */
 public class GameManagerImpl implements GameManager {
 
-	private LevelManager levelManager;
-	private SessionManager sessionManager;
-	private ExpiredSessionScheduler scheduler;
+    private LevelManager levelManager;
+    private SessionManager sessionManager;
+    private ExpiredSessionScheduler scheduler;
 
-	private volatile static GameManager instance;
+    private volatile static GameManager instance;
 
-	public static GameManager getInstance() {
+    public static GameManager getInstance() {
+	if (instance == null) {
+	    synchronized (GameManager.class) {
 		if (instance == null) {
-			synchronized (GameManager.class) {
-				if (instance == null) {
-					instance = new GameManagerImpl();
-				}
-			}
+		    instance = new GameManagerImpl();
 		}
-		return instance;
+	    }
 	}
+	return instance;
+    }
 
-	private GameManagerImpl() {
-		this.levelManager = ManagersSingleton.INSTANCE.getLevelManager();
-		this.sessionManager = ManagersSingleton.INSTANCE.getSessionManager();
-		this.scheduler = new ExpiredSessionScheduler();
-		scheduler.startService();
+    private GameManagerImpl() {
+	this.levelManager = ManagersSingleton.INSTANCE.getLevelManager();
+	this.sessionManager = ManagersSingleton.INSTANCE.getSessionManager();
+	this.scheduler = new ExpiredSessionScheduler();
+	scheduler.startService();
 
-	}
+    }
 
-	public String login(Integer userId) {
-		UserSession session = new UserSession(userId);
-		sessionManager.addSession(session);
-		return session.getSessionId();
-	}
+    public String login(Integer userId) {
+	UserSession session = new UserSession(userId);
+	sessionManager.addSession(session);
+	return session.getSessionId();
+    }
 
-	public void addScore(String sessionKey, Integer levelId, Integer score) throws SessionExpiredException {
-		UserSession session = sessionManager.getUserSession(sessionKey);
-		UserScore userScore = new UserScore(session.getUserId(), levelId, score);
-		levelManager.addUserScore(userScore);
-	}
+    public void addScore(String sessionKey, Integer levelId, Integer score) throws SessionExpiredException {
+	UserSession session = sessionManager.getUserSession(sessionKey);
+	UserScore userScore = new UserScore(session.getUserId(), levelId, score);
+	levelManager.addUserScore(userScore);
+    }
 
-	public GameLevel listLevelRanking(Integer levelId) throws LevelNotFoundException {
-		return levelManager.getLevelRanking(levelId);
-	}
+    public GameLevel listLevelRanking(Integer levelId) throws LevelNotFoundException {
+	return levelManager.getLevelRanking(levelId);
+    }
 
 }

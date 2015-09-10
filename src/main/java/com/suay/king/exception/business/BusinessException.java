@@ -9,42 +9,42 @@ import com.suay.king.exception.BaseException;
  */
 public class BusinessException extends BaseException {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -1999459648129105506L;
+    /**
+     * Serial for this class version
+     */
+    private static final long serialVersionUID = -1999459648129105506L;
 
-	private static final Integer BASE_ERROR_CODE = -1;
+    private static final Integer BASE_ERROR_CODE = -1;
 
-	private Integer code;
+    private Integer code;
 
-	public BusinessException() {
-		super();
-		this.code = BASE_ERROR_CODE;
-	}
+    public BusinessException() {
+	super();
+	this.code = BASE_ERROR_CODE;
+    }
 
-	public BusinessException(Integer code) {
-		super();
+    public BusinessException(Integer code) {
+	super();
 
-	}
+    }
 
-	public BusinessException(String message, Integer code) {
-		super(message);
-	}
+    public BusinessException(String message, Integer code) {
+	super(message);
+    }
 
-	/**
-	 * @return the code
-	 */
-	public Integer getCode() {
-		return code;
-	}
+    /**
+     * @return the code
+     */
+    public Integer getCode() {
+	return code;
+    }
 
-	/**
-	 * @param code
-	 *            the code to set
-	 */
-	public void setCode(Integer code) {
-		this.code = code;
-	}
+    /**
+     * @param code
+     *            the code to set
+     */
+    public void setCode(Integer code) {
+	this.code = code;
+    }
 
 }

@@ -14,39 +14,38 @@ import com.suay.king.utils.Constants;
  */
 public enum ManagersSingleton {
 
-	INSTANCE;
+    INSTANCE;
 
-	private SessionManager sessionManager;
+    private SessionManager sessionManager;
 
-	private LevelManager levelManager;
+    private LevelManager levelManager;
 
-	private GameManager gameManager;
+    private GameManager gameManager;
 
-	ManagersSingleton() {
-		this.sessionManager = new SessionManagerImpl(
-				Constants.SESSION_EXPIRATION_TIME);
-		this.levelManager = new LevelManagerImpl();
-	}
+    ManagersSingleton() {
+	this.sessionManager = new SessionManagerImpl(Constants.SESSION_EXPIRATION_TIME);
+	this.levelManager = new LevelManagerImpl();
+    }
 
-	/**
-	 * @return the sessionManager
-	 */
-	public SessionManager getSessionManager() {
-		return sessionManager;
-	}
+    /**
+     * @return the sessionManager
+     */
+    public SessionManager getSessionManager() {
+	return sessionManager;
+    }
 
-	/**
-	 * @return the levelManager
-	 */
-	public LevelManager getLevelManager() {
-		return levelManager;
-	}
+    /**
+     * @return the levelManager
+     */
+    public LevelManager getLevelManager() {
+	return levelManager;
+    }
 
-	/**
-	 * @return the gameManager
-	 */
-	public GameManager getGameManager() {
-		return gameManager;
-	}
+    /**
+     * @return the gameManager
+     */
+    public GameManager getGameManager() {
+	return gameManager;
+    }
 
 }
