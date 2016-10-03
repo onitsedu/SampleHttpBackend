@@ -1,6 +1,6 @@
 Usage of the application:
 
-java -jar KingMiniGameBackend-1.0.jar [port(optional)]
+java -jar MiniGameBackend-1.0.jar [port(optional)]
 
 if port is not provided, server will be initialized in the default port (8080)
 
